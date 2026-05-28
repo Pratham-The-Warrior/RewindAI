@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Crimson background gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#9f1239" />
+    </linearGradient>
+    
+    <!-- Neon Teal glow gradient -->
+    <linearGradient id="glow-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#22d3ee" />
+    </linearGradient>
+    
+    <!-- Drop shadow for the inner shield -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded rect -->
+  <rect width="128" height="128" rx="28" fill="url(#bg-grad)" />
+
+  <!-- Neon Teal Security Shield Arc -->
+  <path d="M 64,16 C 85,16 100,24 104,36 C 104,74 80,98 64,112 C 48,98 24,74 24,36 C 28,24 43,16 64,16 Z" 
+        fill="none" 
+        stroke="url(#glow-grad)" 
+        stroke-width="4" 
+        opacity="0.8" />
+
+  <!-- Inner Crimson Shield -->
+  <path d="M 64,24 C 80,24 92,30 96,40 C 96,70 76,90 64,102 C 52,90 32,70 32,40 C 36,30 48,24 64,24 Z" 
+        fill="#b91c1c" 
+        filter="url(#shadow)" />
+
+  <!-- Vault Lock Outline (White circle) -->
+  <circle cx="64" cy="56" r="16" fill="none" stroke="#ffffff" stroke-width="4.5" />
+  
+  <!-- Lock Core / Keyhole (Sleek triangle & circle combo) -->
+  <path d="M 64,48 C 68.3,48 71.8,51.5 71.8,55.8 C 71.8,58.8 70.1,61.4 67.5,62.7 L 70,72 L 58,72 L 60.5,62.7 C 57.9,61.4 56.2,58.8 56.2,55.8 C 56.2,51.5 59.7,48 64,48 Z" 
+        fill="#ffffff" />
+        
+  <!-- Soft glow highlights -->
+  <circle cx="44" cy="38" r="2" fill="#ffffff" opacity="0.6" />
+</svg>
