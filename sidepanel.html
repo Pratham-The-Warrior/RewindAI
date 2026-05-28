@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Vault - Compact Side Panel</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR NAVIGATION (Collapses dynamically to responsive toolbar in sidepanel width) -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <a href="#" class="brand-section" id="nav-brand">
+          <div class="brand-icon-wrapper">
+            <svg viewBox="0 0 24 24">
+              <path d="M12,1L3,5V11C3,16.5 7,21 12,23C17,21 21,16.5 21,11V5L12,1M12,11.5A2.5,2.5 0 0,1 14.5,14C14.5,15.1 13.8,16 12.8,16.4L13.5,19H10.5L11.2,16.4C10.2,16 9.5,15.1 9.5,14A2.5,2.5 0 0,1 12,11.5M12,5A3,3 0 0,1 15,8H9A3,3 0 0,1 12,5Z"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Privacy Vault</span>
+            <span class="brand-tag">Local Storage</span>
+          </div>
+        </a>
+        
+        <ul class="nav-list">
+          <li class="nav-item active" data-view="dashboard">
+            <a class="nav-link">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="9" rx="1"/>
+                <rect x="14" y="3" width="7" height="5" rx="1"/>
+                <rect x="14" y="12" width="7" height="9" rx="1"/>
+                <rect x="3" y="16" width="7" height="5" rx="1"/>
+              </svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item" data-view="history">
+            <a class="nav-link">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9"/>
+                <polyline points="12 7 12 12 15 15"/>
+              </svg>
+              <span>History</span>
+            </a>
+          </li>
+          <li class="nav-item" data-view="sync">
+            <a class="nav-link">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <span>Sync</span>
+            </a>
+          </li>
+          <li class="nav-item" data-view="chat">
+            <a class="nav-link">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              <span>Insights</span>
+            </a>
+          </li>
+          <li class="nav-item" data-view="lab">
+            <a class="nav-link">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="sidebar-btn-danger" id="sidebar-clear-btn">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          Purge DB
+        </button>
+        <div class="sidebar-footer-links">
+          <a class="footer-link" id="btn-help">Help</a>
+          <a class="footer-link" id="btn-status">Status</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN COMPACT SIDE PANEL CONTENT AREA -->
+    <main class="main-content">
+      
+      <!-- TOP UTILITY HEADER -->
+      <header class="dashboard-header">
+        <div class="header-title-area">
+          <h1 class="dashboard-title" id="page-title">Dashboard Overview</h1>
+          <span class="dashboard-subtitle" id="page-subtitle">Your viewing history is secured locally.</span>
+        </div>
+        
+        <div class="header-actions">
+          <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="search-input" id="dashboard-search" placeholder="Search local history...">
+          </div>
+          
+          <div class="header-utility-icons">
+            <button class="utility-btn" title="Settings" id="util-gear">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="status-capsule">
+            <span class="status-dot"></span>
+            <span>Active</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW PANELS CONTAINER -->
+      <div id="views-container">
+        
+        <!-- 1. DASHBOARD VIEW PANEL -->
+        <section class="view-panel active" id="view-dashboard">
+          
+          <!-- Triple Statistics Row -->
+          <div class="dashboard-grid">
+            <div class="metric-card">
+              <div class="metric-header">
+                <div class="metric-icon-box">
+                  <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                </div>
+                <span class="metric-title">Videos Indexed</span>
+              </div>
+              <span class="metric-value" id="stat-count">0</span>
+              <div class="metric-footer">
+                <span class="trend-badge-positive" id="stat-count-today">▲ +0 today</span>
+              </div>
+              <div class="metric-card-bg-circle"></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <div class="metric-icon-box">
+                  <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <span class="metric-title">Local Storage Used</span>
+              </div>
+              <span class="metric-value" id="stat-storage">0.02 MB</span>
+              <div class="metric-footer">
+                <span>Capacity: 5GB reserved</span>
+              </div>
+              <div class="metric-card-bg-circle"></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <div class="metric-icon-box">
+                  <svg viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                </div>
+                <span class="metric-title">Last Sync</span>
+              </div>
+              <span class="metric-value">Just now</span>
+              <div class="metric-footer">
+                <span class="trend-badge-positive">✓ Local</span>
+              </div>
+              <div class="metric-card-bg-circle"></div>
+            </div>
+          </div>
+
+          <!-- Analysis and Controls Row -->
+          <div class="dashboard-middle-row">
+            
+            <!-- Radial Progress Card -->
+            <div class="analysis-card">
+              <div class="progress-radial-wrapper">
+                <div class="progress-radial">
+                  <svg viewBox="0 0 100 100">
+                    <circle class="progress-circle-bg" cx="50" cy="50" r="40"/>
+                    <circle class="progress-circle-fill" id="radial-progress-bar" cx="50" cy="50" r="40"/>
+                  </svg>
+                  <div class="progress-radial-text">
+                    <span class="progress-percent" id="radial-progress-text">100%</span>
+                    <span class="progress-label">Active</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="analysis-content">
+                <div class="badge-pill-cyan">
+                  Local AI Processing Active
+                </div>
+                <h3 class="analysis-title" id="radial-status-title">Synced & Indexed</h3>
+                <p class="analysis-description" id="radial-status-desc">All captured video logs and metadata are saved locally.</p>
+                
+                <div class="linear-progress-wrapper">
+                  <div class="linear-progress-track">
+                    <div class="linear-progress-bar" id="linear-progress-fill" style="width: 100%"></div>
+                  </div>
+                  <span class="linear-progress-footer" id="linear-progress-text">Database is idle</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Side Privacy Controls Panel -->
+            <div class="controls-card">
+              <div class="controls-header">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <h4 class="controls-title">Privacy Controls</h4>
+              </div>
+              
+              <div class="control-item">
+                <div class="control-label-group">
+                  <span class="control-label">Auto-index videos</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="ctrl-auto-index" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="control-item">
+                <div class="control-label-group">
+                  <span class="control-label">Enable RAG AI Search</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="ctrl-rag-search" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <button class="purge-btn" id="ctrl-purge-btn">
+                Purge All Local Data
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Recently Indexed Section -->
+          <div class="recently-indexed-section">
+            <div class="section-header-row">
+              <h2 class="section-title">Recently Indexed</h2>
+              <a href="#" class="section-link" id="dash-view-all">View All</a>
+            </div>
+            
+            <div class="video-grid" id="recently-indexed-grid">
+              <!-- Dynamically populated video cards -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. HISTORY VIEW PANEL -->
+        <section class="view-panel" id="view-history">
+          <div class="recently-indexed-section">
+            <div class="section-header-row">
+              <h2 class="section-title">Timeline</h2>
+            </div>
+            <div class="history-timeline" id="history-timeline-list">
+              <!-- Dynamically populated timeline cards -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. SYNCHRONIZE VIEW PANEL -->
+        <section class="view-panel" id="view-sync">
+          <div class="settings-section-container">
+            <div class="settings-card">
+              <h3 class="settings-card-title">Vault Backups</h3>
+              <p class="settings-desc">Export secure database files to back up your watch history, or import previously saved backups.</p>
+              
+              <div class="settings-horizontal-group" style="flex-direction: column;">
+                <button class="settings-btn-primary" id="btn-export-json">Export History (JSON)</button>
+                <button class="settings-btn-outline" id="btn-trigger-import-db">Import Backup</button>
+                <input type="file" id="db-file-input" style="display: none;" accept=".json">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. AI INSIGHTS / CHAT PANEL -->
+        <section class="view-panel" id="view-chat">
+          <div class="chat-container">
+            <div class="chat-header">
+              <div class="chat-bot-avatar">
+                <svg viewBox="0 0 24 24">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+              </div>
+              <div class="chat-header-info">
+                <span class="chat-bot-name">Vault AI Assistant</span>
+                <span class="chat-bot-status">Active</span>
+              </div>
+            </div>
+
+            <!-- Message Area -->
+            <div class="chat-messages" id="chat-messages-container">
+              <div class="chat-message assistant">
+                <div class="message-avatar">AI</div>
+                <div class="message-bubble">
+                  <p>Hello! I am your <strong>Vault AI Assistant</strong>.</p>
+                  <p>Ask me questions about your history, such as:
+                    <ul>
+                      <li><em>"What coding videos did I watch last week?"</em></li>
+                      <li><em>"Did I watch any videos from TechChannel?"</em></li>
+                    </ul>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic chip suggestion list -->
+            <div class="suggestion-container" id="chat-suggestions">
+              <div class="suggestion-chip">What did I watch yesterday?</div>
+              <div class="suggestion-chip">Search coding videos</div>
+            </div>
+
+            <!-- Input Box -->
+            <div class="chat-input-bar">
+              <div class="chat-input-wrapper">
+                <input type="text" class="chat-input" id="chat-user-input" placeholder="Ask about history...">
+              </div>
+              <button class="chat-send-btn" id="chat-send-btn">
+                <svg viewBox="0 0 24 24">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. PRIVACY LAB / SETTINGS VIEW PANEL -->
+        <section class="view-panel" id="view-lab">
+          <div class="settings-section-container">
+            
+            <!-- Local Privacy Guarantees Shield Card -->
+            <div class="settings-card" style="border: 1.5px solid rgba(16, 185, 129, 0.2); background-color: #f0fdf4;">
+              <h3 class="settings-card-title" style="color: #047857; border-bottom: 1px solid rgba(16, 185, 129, 0.15); font-size: 13px;">
+                <svg viewBox="0 0 24 24" style="stroke: #047857; width: 14px; height: 14px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Local Privacy Vault Guarantees
+              </h3>
+              
+              <ul class="settings-desc" style="list-style: none; display: flex; flex-direction: column; gap: 8px; color: #065f46; padding-left: 0; font-size: 10px; line-height: 1.4;">
+                <li style="display: flex; align-items: flex-start; gap: 6px;">
+                  <span style="color: #10b981; font-weight: bold;">✓</span>
+                  <span><strong>100% Local-First</strong>: Data saved strictly in browser's local IndexedDB sandbox. No external servers or cloud DBs.</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; gap: 6px;">
+                  <span style="color: #10b981; font-weight: bold;">✓</span>
+                  <span><strong>Zero Analytics</strong>: No trackers, telemetry, or log sync servers ever see your logs.</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; gap: 6px;">
+                  <span style="color: #10b981; font-weight: bold;">✓</span>
+                  <span><strong>Direct API Keys</strong>: Gemini / Groq credentials are sent directly to official endpoints from Chrome.</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; gap: 6px;">
+                  <span style="color: #10b981; font-weight: bold;">✓</span>
+                  <span><strong>Full Control</strong>: Export JSON database backups or wipe your vault in 1 click.</span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- AI Mode Selector -->
+            <div class="settings-card">
+              <h3 class="settings-card-title">AI Engine Settings</h3>
+              
+              <div class="settings-form-group">
+                <label class="settings-label" for="setting-ai-provider">Query Provider</label>
+                <select class="settings-select" id="setting-ai-provider">
+                  <option value="gemini_api">Google Gemini API (Recommended)</option>
+                  <option value="groq_api">Groq API (Absolute Speed)</option>
+                  <option value="window_ai">Chrome Built-in AI (Gemini Nano)</option>
+                </select>
+              </div>
+
+              <!-- Gemini API Key configuration box -->
+              <div class="settings-form-group" id="group-api-key">
+                <label class="settings-label" for="setting-api-key">Gemini API Key</label>
+                <input type="password" class="settings-input" id="setting-api-key" placeholder="Enter key (AIzaSy...)">
+                
+                <div class="settings-horizontal-group" style="margin-top: 8px;">
+                  <button class="settings-btn-primary" id="btn-save-settings">Save Key</button>
+                  <button class="settings-btn-outline" id="btn-test-key">Test Key</button>
+                </div>
+              </div>
+
+              <!-- Groq API Key & Model configuration box -->
+              <div class="settings-form-group" id="group-groq-key" style="display: none;">
+                <label class="settings-label" for="setting-groq-model">Active Groq Model</label>
+                <select class="settings-select" id="setting-groq-model" style="margin-bottom: 8px;">
+                  <option value="llama3-70b-8192">Meta Llama 3 70B</option>
+                  <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                  <option value="llama3-8b-8192">Meta Llama 3 8B</option>
+                </select>
+
+                <label class="settings-label" for="setting-groq-key">Groq API Key</label>
+                <input type="password" class="settings-input" id="setting-groq-key" placeholder="Enter Groq Key (gsk_...)">
+                
+                <div class="settings-horizontal-group" style="margin-top: 8px;">
+                  <button class="settings-btn-primary" id="btn-save-groq">Save Groq</button>
+                  <button class="settings-btn-outline" id="btn-test-groq">Test Groq</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Google Takeout File Uploader -->
+            <div class="settings-card">
+              <h3 class="settings-card-title">Google Takeout Import</h3>
+              <p class="settings-desc">Drag and drop your <code>watch-history.json</code> file below to backfill past data.</p>
+              
+              <div class="takeout-upload-area" id="takeout-drop-zone">
+                <svg viewBox="0 0 24 24">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="takeout-upload-title">Drop watch-history.json here</span>
+                <input type="file" id="takeout-file-input" style="display: none;" accept=".json">
+              </div>
+
+              <!-- Import progress indicator bar -->
+              <div class="import-progress-card" id="takeout-progress-card" style="display: none;">
+                <div class="import-progress-header">
+                  <span id="takeout-progress-status">Importing...</span>
+                  <span id="takeout-progress-percent">0%</span>
+                </div>
+                <div class="import-progress-bar-track">
+                  <div class="import-progress-bar-fill" id="takeout-progress-fill"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Retention Policy -->
+            <div class="settings-card">
+              <h3 class="settings-card-title">Data Retention</h3>
+              <select class="settings-select" id="setting-retention">
+                <option value="forever">Keep Forever (Recommended)</option>
+                <option value="year">Keep 1 Year</option>
+                <option value="six_months">Keep 6 Months</option>
+                <option value="thirty_days">Keep 30 Days</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Central toast indicator -->
+  <div class="toast" id="toast-notify">
+    <svg viewBox="0 0 24 24" width="16" height="16">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toast-message">Ready</span>
+  </div>
+
+  <script type="module" src="sidepanel.js"></script>
+</body>
+</html>
