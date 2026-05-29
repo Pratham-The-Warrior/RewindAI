@@ -263,6 +263,17 @@ function setupEventListeners() {
     });
   }
 
+  // Quick switch to local offline AI button
+  const switchOfflineBtn = document.getElementById('btn-switch-offline-ai');
+  if (switchOfflineBtn) {
+    switchOfflineBtn.addEventListener('click', () => {
+      if (providerSelect) {
+        providerSelect.value = 'window_ai';
+        providerSelect.dispatchEvent(new Event('change'));
+      }
+    });
+  }
+
   // Retention Policy Selection Change
   const retentionSelect = document.getElementById('setting-retention');
   if (retentionSelect) {
