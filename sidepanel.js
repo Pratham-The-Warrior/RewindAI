@@ -1431,21 +1431,29 @@ function renderAnalyticsDashboard(analytics) {
       return;
     }
 
-    const maxWatchTime = topChannels[0].watchTime || 1;
+    const maxWatchTime = topChannels[0].watchTime || 0;
+    const maxCount = topChannels[0].count || 1;
+    const isWatchTimeActive = maxWatchTime > 0;
 
     topChannels.forEach((channel, idx) => {
       const item = document.createElement('div');
       item.className = 'leaderboard-item';
 
       const initial = (channel.name || 'Y').charAt(0).toUpperCase();
-      const percent = Math.round((channel.watchTime / maxWatchTime) * 100);
+      
+      // Scale progress bars either by exact watch time (if any exists) or by view count
+      const percent = isWatchTimeActive
+        ? Math.round((channel.watchTime / maxWatchTime) * 100)
+        : Math.round((channel.count / maxCount) * 100);
       
       const avatarHtml = channel.avatar 
         ? `<img src="${channel.avatar}" alt="${escapeHtml(channel.name)}" class="leaderboard-avatar-img">`
         : `<div class="leaderboard-avatar-initial">${initial}</div>`;
 
-      // Format time spent: e.g. "36m" or "1h 12m". Fallback if watchTime is 0 from legacy imports.
-      const timeSpentFormatted = formatWatchTimeMetric(channel.watchTime || (channel.count * 120));
+      // Display exact time spent if tracked, otherwise show views count (no estimation)
+      const statFormatted = channel.watchTime > 0
+        ? formatWatchTimeMetric(channel.watchTime)
+        : `${channel.count} views`;
 
       item.innerHTML = `
         <div class="leaderboard-avatar">${avatarHtml}</div>
@@ -1457,7 +1465,7 @@ function renderAnalyticsDashboard(analytics) {
                 <polygon points="23 7 16 12 23 17 23 7"/>
                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
               </svg>
-              ${timeSpentFormatted}
+              ${statFormatted}
             </span>
           </div>
           <div class="leaderboard-progress-track">

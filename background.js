@@ -223,7 +223,7 @@ async function fetchAndBackfillHistory() {
             channelUrl,
             channelAvatar,
             duration,
-            watchTime: duration,
+            watchTime: 0, // Set to 0 to maintain absolute accuracy (only active session logs count towards watch time)
             timestamp,
             thumbnail: `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`
           });
