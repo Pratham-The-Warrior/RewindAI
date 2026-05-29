@@ -1420,9 +1420,9 @@ function renderAnalyticsDashboard(analytics) {
     // If database has no entries, show mock channels
     const topChannels = (analytics.totalCount === 0) 
       ? [
-          { name: 'Tech Channel', count: 18, avatar: 'https://i.ytimg.com/vi/dgJrHeeyQdA/hqdefault.jpg' }, 
-          { name: 'Code Academy', count: 12, avatar: '' }, 
-          { name: 'Dev Talks', count: 8, avatar: '' }
+          { name: 'Tech Channel', count: 18, watchTime: 18 * 120, avatar: 'https://i.ytimg.com/vi/dgJrHeeyQdA/hqdefault.jpg' }, 
+          { name: 'Code Academy', count: 12, watchTime: 12 * 120, avatar: '' }, 
+          { name: 'Dev Talks', count: 8, watchTime: 8 * 120, avatar: '' }
         ]
       : analytics.topChannels.slice(0, 3);
 
@@ -1431,18 +1431,21 @@ function renderAnalyticsDashboard(analytics) {
       return;
     }
 
-    const maxCount = topChannels[0].count || 1;
+    const maxWatchTime = topChannels[0].watchTime || 1;
 
     topChannels.forEach((channel, idx) => {
       const item = document.createElement('div');
       item.className = 'leaderboard-item';
 
       const initial = (channel.name || 'Y').charAt(0).toUpperCase();
-      const percent = Math.round((channel.count / maxCount) * 100);
+      const percent = Math.round((channel.watchTime / maxWatchTime) * 100);
       
       const avatarHtml = channel.avatar 
         ? `<img src="${channel.avatar}" alt="${escapeHtml(channel.name)}" class="leaderboard-avatar-img">`
         : `<div class="leaderboard-avatar-initial">${initial}</div>`;
+
+      // Format time spent: e.g. "36m" or "1h 12m". Fallback if watchTime is 0 from legacy imports.
+      const timeSpentFormatted = formatWatchTimeMetric(channel.watchTime || (channel.count * 120));
 
       item.innerHTML = `
         <div class="leaderboard-avatar">${avatarHtml}</div>
@@ -1454,7 +1457,7 @@ function renderAnalyticsDashboard(analytics) {
                 <polygon points="23 7 16 12 23 17 23 7"/>
                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
               </svg>
-              ${channel.count} views
+              ${timeSpentFormatted}
             </span>
           </div>
           <div class="leaderboard-progress-track">

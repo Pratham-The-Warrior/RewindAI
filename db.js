@@ -71,6 +71,9 @@ export async function addWatchEntry(entry) {
           if (entry.duration) {
             record.duration = entry.duration; // Update total duration just in case
           }
+          if (entry.channelAvatar) {
+            record.channelAvatar = entry.channelAvatar;
+          }
           
           const updateRequest = cursor.update(record);
           updateRequest.onsuccess = () => resolve(record.id);
@@ -87,6 +90,7 @@ export async function addWatchEntry(entry) {
         title: entry.title || 'YouTube Video',
         channel: entry.channel || 'YouTube Creator',
         channelUrl: entry.channelUrl || (entry.channel ? `https://www.youtube.com/@${entry.channel.replace(/\s+/g, '')}` : 'https://www.youtube.com'),
+        channelAvatar: entry.channelAvatar || '',
         duration: entry.duration || 0,
         watchTime: entry.watchTime || 0,
         timestamp: entry.timestamp || Date.now(),
@@ -321,7 +325,7 @@ export async function getAnalytics() {
     
     let totalCount = 0;
     let totalWatchTime = 0; // seconds
-    const channelCounts = {}; // name -> { count, avatar }
+    const channelCounts = {}; // name -> { count, watchTime, avatar }
     const dailyViews = {}; // YYYY-MM-DD -> count
     const dailyWatchTime = {}; // YYYY-MM-DD -> seconds
     const activeDaysMap = {}; // YYYY-MM-DD -> true
@@ -342,10 +346,10 @@ export async function getAnalytics() {
     request.onsuccess = (event) => {
       const cursor = event.target.result;
       if (!cursor) {
-        // Aggregate top channels
+        // Aggregate top channels (sorted by watch time spent on that creator)
         const topChannels = Object.entries(channelCounts)
-          .map(([name, data]) => ({ name, count: data.count, avatar: data.avatar }))
-          .sort((a, b) => b.count - a.count)
+          .map(([name, data]) => ({ name, count: data.count, watchTime: data.watchTime, avatar: data.avatar }))
+          .sort((a, b) => b.watchTime - a.watchTime || b.count - a.count)
           .slice(0, 5);
 
         // Daily trend list
@@ -376,9 +380,10 @@ export async function getAnalytics() {
       // Track channel and its latest avatar
       if (val.channel) {
         if (!channelCounts[val.channel]) {
-          channelCounts[val.channel] = { count: 0, avatar: val.channelAvatar || '' };
+          channelCounts[val.channel] = { count: 0, watchTime: 0, avatar: val.channelAvatar || '' };
         }
         channelCounts[val.channel].count++;
+        channelCounts[val.channel].watchTime += (val.watchTime || 0);
         if (val.channelAvatar && !channelCounts[val.channel].avatar) {
           channelCounts[val.channel].avatar = val.channelAvatar;
         }
