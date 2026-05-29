@@ -84,9 +84,9 @@ export async function addWatchEntry(entry) {
       // No recent matching entry found, add new record
       const addRequest = store.add({
         videoId: entry.videoId,
-        title: entry.title,
-        channel: entry.channel,
-        channelUrl: entry.channelUrl || `https://www.youtube.com/@${entry.channel.replace(/\s+/g, '')}`,
+        title: entry.title || 'YouTube Video',
+        channel: entry.channel || 'YouTube Creator',
+        channelUrl: entry.channelUrl || (entry.channel ? `https://www.youtube.com/@${entry.channel.replace(/\s+/g, '')}` : 'https://www.youtube.com'),
         duration: entry.duration || 0,
         watchTime: entry.watchTime || 0,
         timestamp: entry.timestamp || Date.now(),
@@ -128,10 +128,13 @@ export async function getHistory(limit = 50, offset = 0, searchFilter = '') {
 
       const val = cursor.value;
       
+      const titleLower = (val.title || '').toLowerCase();
+      const channelLower = (val.channel || '').toLowerCase();
+
       // Filter if search query is provided
       const matchesSearch = !searchFilter || 
-        val.title.toLowerCase().includes(searchFilter.toLowerCase()) || 
-        val.channel.toLowerCase().includes(searchFilter.toLowerCase());
+        titleLower.includes(searchFilter.toLowerCase()) || 
+        channelLower.includes(searchFilter.toLowerCase());
 
       if (matchesSearch) {
         if (skipped < offset) {
@@ -228,8 +231,8 @@ export async function keywordSearch(queryText, options = {}) {
       let score = 0;
 
       if (isKeywordSearch) {
-        const titleLower = val.title.toLowerCase();
-        const channelLower = val.channel.toLowerCase();
+        const titleLower = (val.title || '').toLowerCase();
+        const channelLower = (val.channel || '').toLowerCase();
 
         // Calculate overlap score
         searchTokens.forEach(token => {
@@ -318,8 +321,10 @@ export async function getAnalytics() {
     
     let totalCount = 0;
     let totalWatchTime = 0; // seconds
-    const channelCounts = {};
+    const channelCounts = {}; // name -> { count, avatar }
     const dailyViews = {}; // YYYY-MM-DD -> count
+    const dailyWatchTime = {}; // YYYY-MM-DD -> seconds
+    const activeDaysMap = {}; // YYYY-MM-DD -> true
     
     // Setup last 7 days keys
     const last7Days = [];
@@ -328,6 +333,7 @@ export async function getAnalytics() {
       d.setDate(d.getDate() - i);
       const key = d.toISOString().split('T')[0];
       dailyViews[key] = 0;
+      dailyWatchTime[key] = 0;
       last7Days.push(key);
     }
 
@@ -338,7 +344,7 @@ export async function getAnalytics() {
       if (!cursor) {
         // Aggregate top channels
         const topChannels = Object.entries(channelCounts)
-          .map(([name, count]) => ({ name, count }))
+          .map(([name, data]) => ({ name, count: data.count, avatar: data.avatar }))
           .sort((a, b) => b.count - a.count)
           .slice(0, 5);
 
@@ -346,12 +352,17 @@ export async function getAnalytics() {
         const dailyTrend = last7Days.map(date => ({
           date,
           dayLabel: new Date(date).toLocaleDateString(undefined, { weekday: 'short' }),
-          views: dailyViews[date] || 0
+          views: dailyViews[date] || 0,
+          duration: dailyWatchTime[date] || 0
         }));
+
+        const activeDaysCount = Object.keys(activeDaysMap).length || 1;
+        const dailyAverageWatchTime = Math.round(totalWatchTime / activeDaysCount);
 
         resolve({
           totalCount,
           totalWatchTime,
+          dailyAverageWatchTime,
           topChannels,
           dailyTrend
         });
@@ -362,15 +373,29 @@ export async function getAnalytics() {
       totalCount++;
       totalWatchTime += (val.watchTime || 0);
 
-      // Track channel
+      // Track channel and its latest avatar
       if (val.channel) {
-        channelCounts[val.channel] = (channelCounts[val.channel] || 0) + 1;
+        if (!channelCounts[val.channel]) {
+          channelCounts[val.channel] = { count: 0, avatar: val.channelAvatar || '' };
+        }
+        channelCounts[val.channel].count++;
+        if (val.channelAvatar && !channelCounts[val.channel].avatar) {
+          channelCounts[val.channel].avatar = val.channelAvatar;
+        }
       }
 
-      // Track daily views (if within last 7 days)
-      const entryDate = new Date(val.timestamp).toISOString().split('T')[0];
-      if (entryDate in dailyViews) {
-        dailyViews[entryDate]++;
+      // Track daily views and active calendar days
+      if (val.timestamp) {
+        try {
+          const entryDate = new Date(val.timestamp).toISOString().split('T')[0];
+          activeDaysMap[entryDate] = true;
+          if (entryDate in dailyViews) {
+            dailyViews[entryDate]++;
+            dailyWatchTime[entryDate] += (val.watchTime || 0);
+          }
+        } catch (e) {
+          console.warn('[Privacy Vault] Skipping views tracking for corrupted timestamp record:', val);
+        }
       }
 
       cursor.continue();

@@ -1,11 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Privacy Vault: Local YouTube History Query",
+  "name": "Rewind: My YouTube Assistant",
   "version": "1.0.0",
-  "description": "Privacy-first extension capturing YouTube watch history locally with an integrated RAG chatbot and analytics dashboard.",
+  "description": "Your private YouTube companion. Search your watched history and chat with a helpful assistant that remembers what you saw.",
   "permissions": [
     "storage",
-    "sidePanel"
+    "sidePanel",
+    "alarms"
   ],
   "host_permissions": [
     "*://*.youtube.com/*"

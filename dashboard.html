@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Vault - Local Dashboard Overview</title>
+  <title>Rewind - My YouTube History</title>
   <link rel="stylesheet" href="sidepanel.css">
 </head>
 <body>
@@ -20,8 +20,8 @@
             </svg>
           </div>
           <div class="brand-text">
-            <span class="brand-name">Privacy Vault</span>
-            <span class="brand-tag">Local-Only Storage</span>
+            <span class="brand-name">Rewind</span>
+            <span class="brand-tag">Personal Assistant</span>
           </div>
         </a>
         
@@ -53,7 +53,7 @@
                 <polyline points="17 8 12 3 7 8"/>
                 <line x1="12" y1="3" x2="12" y2="15"/>
               </svg>
-              <span>Encrypted Sync</span>
+              <span>Import & Export</span>
             </a>
           </li>
           <li class="nav-item" data-view="chat">
@@ -61,7 +61,7 @@
               <svg viewBox="0 0 24 24">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
-              <span>AI Insights</span>
+              <span>Chat with Assistant</span>
             </a>
           </li>
           <li class="nav-item" data-view="lab">
@@ -69,7 +69,7 @@
               <svg viewBox="0 0 24 24">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
               </svg>
-              <span>Privacy Lab</span>
+              <span>Settings</span>
             </a>
           </li>
         </ul>
@@ -103,7 +103,7 @@
       <header class="dashboard-header">
         <div class="header-title-area">
           <h1 class="dashboard-title" id="page-title">Dashboard Overview</h1>
-          <span class="dashboard-subtitle" id="page-subtitle">Your local viewing history is securely encrypted.</span>
+          <span class="dashboard-subtitle" id="page-subtitle">Your YouTube history is saved safely on your computer.</span>
         </div>
         
         <div class="header-actions">
@@ -154,8 +154,9 @@
         <!-- 1. DASHBOARD VIEW PANEL -->
         <section class="view-panel active" id="view-dashboard">
           
-          <!-- Triple Statistics Row -->
+          <!-- Quad Statistics Row -->
           <div class="dashboard-grid">
+            <!-- 1. Videos Indexed -->
             <div class="metric-card">
               <div class="metric-header">
                 <div class="metric-icon-box">
@@ -167,71 +168,110 @@
               <div class="metric-footer">
                 <span class="trend-badge-positive" id="stat-count-today">▲ +0 today</span>
               </div>
-              <div class="metric-card-bg-circle"></div>
+              <div class="metric-card-bg-circle circle-cyan"></div>
             </div>
 
+            <!-- 2. Total Watch Time -->
+            <div class="metric-card">
+              <div class="metric-header">
+                <div class="metric-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <span class="metric-title">Total Watch Time</span>
+              </div>
+              <span class="metric-value" id="stat-watch-time">0m</span>
+              <div class="metric-footer">
+                <span id="stat-watch-time-desc">Active reading logs</span>
+              </div>
+              <div class="metric-card-bg-circle circle-emerald"></div>
+            </div>
+
+            <!-- 3. Daily Average -->
+            <div class="metric-card">
+              <div class="metric-header">
+                <div class="metric-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+                </div>
+                <span class="metric-title">Daily Average</span>
+              </div>
+              <span class="metric-value" id="stat-daily-average">0m</span>
+              <div class="metric-footer">
+                <span id="stat-daily-average-desc">Per active day</span>
+              </div>
+              <div class="metric-card-bg-circle circle-orange"></div>
+            </div>
+
+            <!-- 4. Disk Space Used -->
             <div class="metric-card">
               <div class="metric-header">
                 <div class="metric-icon-box">
                   <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                 </div>
-                <span class="metric-title">Local Storage Used</span>
+                <span class="metric-title">Disk Space Used</span>
               </div>
               <span class="metric-value" id="stat-storage">0.02 MB</span>
               <div class="metric-footer">
                 <span>Capacity: 5GB reserved</span>
               </div>
-              <div class="metric-card-bg-circle"></div>
-            </div>
-
-            <div class="metric-card">
-              <div class="metric-header">
-                <div class="metric-icon-box">
-                  <svg viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-                </div>
-                <span class="metric-title">Last Sync</span>
-              </div>
-              <span class="metric-value">Just now</span>
-              <div class="metric-footer">
-                <span class="trend-badge-positive">✓ Fully encrypted</span>
-              </div>
-              <div class="metric-card-bg-circle"></div>
+              <div class="metric-card-bg-circle circle-purple"></div>
             </div>
           </div>
 
           <!-- Analysis and Controls Row -->
           <div class="dashboard-middle-row">
             
-            <!-- Radial Progress Card -->
+            <!-- Dynamic Activity Insights Card -->
             <div class="analysis-card">
-              <div class="progress-radial-wrapper">
-                <div class="progress-radial">
-                  <svg viewBox="0 0 100 100">
-                    <circle class="progress-circle-bg" cx="50" cy="50" r="40"/>
-                    <circle class="progress-circle-fill" id="radial-progress-bar" cx="50" cy="50" r="40"/>
+              <div class="analytics-chart-column">
+                <div class="analytics-header">
+                  <div class="badge-pill-cyan">
+                    <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" fill="none" stroke-width="3">
+                      <polygon points="12 2 2 22 22 22 12 2"></polygon>
+                    </svg>
+                    Weekly Activity
+                  </div>
+                  <span class="analytics-subtitle" id="chart-week-range">Last 7 Days</span>
+                </div>
+                
+                <div class="chart-container-svg">
+                  <!-- Floating Interactive Tooltip -->
+                  <div class="chart-tooltip" id="chart-tooltip"></div>
+                  
+                  <!-- Dynamic SVG Line Chart -->
+                  <svg viewBox="0 0 300 120" id="weekly-trend-svg">
+                    <defs>
+                      <linearGradient id="chart-area-gradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.25"/>
+                        <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <!-- Grid lines -->
+                    <line x1="0" y1="15" x2="300" y2="15" stroke="#f3f4f6" stroke-width="1" stroke-dasharray="4"/>
+                    <line x1="0" y1="60" x2="300" y2="60" stroke="#f3f4f6" stroke-width="1" stroke-dasharray="4"/>
+                    <line x1="0" y1="105" x2="300" y2="105" stroke="#f3f4f6" stroke-width="1"/>
+                    
+                    <!-- Path and Area -->
+                    <path class="chart-area" d="M 0 105 L 300 105 Z" id="chart-area-path"/>
+                    <path class="chart-line" d="M 0 105 L 300 105" id="chart-line-path"/>
+                    
+                    <!-- Daily Dots & Text Labels -->
+                    <g id="chart-dots-group"></g>
                   </svg>
-                  <div class="progress-radial-text">
-                    <span class="progress-percent" id="radial-progress-text">100%</span>
-                    <span class="progress-label">Active</span>
+                  
+                  <div class="chart-labels-row" id="chart-labels-container">
+                    <!-- Labels e.g. Mon, Tue... -->
                   </div>
                 </div>
               </div>
               
-              <div class="analysis-content">
-                <div class="badge-pill-cyan">
-                  <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" fill="none" stroke-width="3">
-                    <polygon points="12 2 2 22 22 22 12 2"></polygon>
-                  </svg>
-                  Local AI Processing Active
+              <div class="analytics-divider"></div>
+              
+              <div class="analytics-leaderboard-column">
+                <div class="analytics-header">
+                  <span class="analytics-section-title">My Top Channels</span>
                 </div>
-                <h3 class="analysis-title" id="radial-status-title">Watch History Fully Synced</h3>
-                <p class="analysis-description" id="radial-status-desc">All captured video logs and metadata are indexed in your secure browser SQLite/IndexedDB environment, ready to query locally.</p>
-                
-                <div class="linear-progress-wrapper">
-                  <div class="linear-progress-track">
-                    <div class="linear-progress-bar" id="linear-progress-fill" style="width: 100%"></div>
-                  </div>
-                  <span class="linear-progress-footer" id="linear-progress-text">Database is idle</span>
+                <div class="leaderboard-list" id="analytics-leaderboard-list">
+                  <!-- Dynamically populated top 3 channels -->
                 </div>
               </div>
             </div>
@@ -242,13 +282,13 @@
                 <svg viewBox="0 0 24 24">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
-                <h4 class="controls-title">Privacy Controls</h4>
+                <h4 class="controls-title">Controls</h4>
               </div>
               
               <div class="control-item">
                 <div class="control-label-group">
-                  <span class="control-label">Auto-index new videos</span>
-                  <span class="control-desc">Save history locally in background.</span>
+                  <span class="control-label">Automatically save new videos</span>
+                  <span class="control-desc">Saves your history as you watch.</span>
                 </div>
                 <label class="switch">
                   <input type="checkbox" id="ctrl-auto-index" checked>
@@ -258,8 +298,8 @@
 
               <div class="control-item">
                 <div class="control-label-group">
-                  <span class="control-label">Enable RAG AI Search</span>
-                  <span class="control-desc">Allow AI to read local database.</span>
+                  <span class="control-label">Enable Assistant Search</span>
+                  <span class="control-desc">Allows the helper to look at your history to answer questions.</span>
                 </div>
                 <label class="switch">
                   <input type="checkbox" id="ctrl-rag-search" checked>
@@ -271,10 +311,13 @@
                 <svg viewBox="0 0 24 24">
                   <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                 </svg>
-                Purge All Local Data
+                Delete All Saved History
               </button>
             </div>
           </div>
+
+          <!-- History Sync Action Banner Placeholder -->
+          <div id="sync-history-banner-container"></div>
 
           <!-- Bottom Recently Indexed Section -->
           <div class="recently-indexed-section">
@@ -310,18 +353,26 @@
             <div class="settings-card">
               <h3 class="settings-card-title">
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                Encrypted Vault Backups
+                Backup History
               </h3>
-              <p class="settings-desc">Since Privacy Vault operates fully locally, your logs are saved in IndexedDB inside your browser sandbox. You can export secure database files to back up your watch statistics, or import previously saved backups.</p>
+              <p class="settings-desc">Your history is saved safely on this computer. You can export backup files to save your history, or import a previous backup file.</p>
               
-              <div class="settings-horizontal-group">
+              <div class="settings-horizontal-group" style="gap: 12px; flex-wrap: wrap;">
                 <button class="settings-btn-primary" id="btn-export-json">
                   <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                  Export History (JSON)
+                  Backup Database (JSON)
                 </button>
                 <button class="settings-btn-outline" id="btn-trigger-import-db">
                   <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                  Import History Backup
+                  Restore Backup
+                </button>
+                <button class="settings-btn-outline" id="btn-export-csv">
+                  <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+                  Export CSV (Notion/Excel)
+                </button>
+                <button class="settings-btn-outline" id="btn-export-md">
+                  <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  Export Markdown (Obsidian)
                 </button>
                 <input type="file" id="db-file-input" style="display: none;" accept=".json">
               </div>
@@ -339,11 +390,11 @@
                 </svg>
               </div>
               <div class="chat-header-info">
-                <span class="chat-bot-name">Vault AI Query Engine</span>
-                <span class="chat-bot-status">RAG Search Local DB Active</span>
+                <span class="chat-bot-name">Rewind Assistant</span>
+                <span class="chat-bot-status">Assistant is Active</span>
               </div>
             </div>
-
+ 
             <!-- Message Area -->
             <div class="chat-messages" id="chat-messages-container">
               <div class="chat-message assistant">
@@ -353,12 +404,11 @@
                   </svg>
                 </div>
                 <div class="message-bubble">
-                  <p>Hello! I am your <strong>Vault AI Assistant</strong>. I act as an intelligent query engine grounded directly in your local YouTube viewing database.</p>
+                  <p>Hello! I am your <strong>Rewind Assistant</strong>. I can help you search and remember videos you've watched.</p>
                   <p>You can ask me questions about your history, such as:
                     <ul>
                       <li><em>"What coding videos did I watch last week?"</em></li>
                       <li><em>"Did I watch any videos from TechChannel recently?"</em></li>
-                      <li><em>"Summarize what topics I've been watching today."</em></li>
                     </ul>
                   </p>
                 </div>
@@ -395,26 +445,26 @@
             <div class="settings-card" style="border: 1.5px solid rgba(16, 185, 129, 0.2); background-color: #f0fdf4;">
               <h3 class="settings-card-title" style="color: #047857; border-bottom: 1px solid rgba(16, 185, 129, 0.15);">
                 <svg viewBox="0 0 24 24" style="stroke: #047857;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                Local Privacy Vault Guarantees
+                Privacy Guarantees
               </h3>
-              <p class="settings-desc" style="color: #065f46; font-weight: 500;">Privacy Vault is designed from the ground up to protect your digital footprint. All features operate strictly under local-first principles:</p>
+              <p class="settings-desc" style="color: #065f46; font-weight: 500;">Rewind is designed to keep your data private. Everything stays safe on your own computer:</p>
               
               <ul class="settings-desc" style="list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 8px; color: #065f46; padding-left: 4px;">
                 <li style="display: flex; align-items: flex-start; gap: 8px;">
                   <span style="color: #10b981;">✓</span>
-                  <span><strong>100% Local-First</strong>: Every video title, channel, duration, and timestamp is stored strictly inside your browser's IndexedDB. No external servers or cloud databases are used.</span>
+                  <span><strong>100% Private</strong>: Every video title, channel, and watch time is saved strictly inside this browser on your computer. No cloud or external servers are used.</span>
                 </li>
                 <li style="display: flex; align-items: flex-start; gap: 8px;">
                   <span style="color: #10b981;">✓</span>
-                  <span><strong>Zero External Tracking</strong>: Absolutely no analytical trackers, telemetry tools, or log scrapers are bundled in our code. What you watch is your business.</span>
+                  <span><strong>No Tracking</strong>: No analytical tracking or logging tools are included. What you watch is completely private.</span>
                 </li>
                 <li style="display: flex; align-items: flex-start; gap: 8px;">
                   <span style="color: #10b981;">✓</span>
-                  <span><strong>Direct API Routing</strong>: Developer API keys (Gemini / Groq) are saved in your Chrome secure storage and sent directly to Google/Groq. No intermediate server sits in the middle.</span>
+                  <span><strong>Safe Keys</strong>: Your setup keys are saved locally and sent directly to Google. No third-party servers see them.</span>
                 </li>
                 <li style="display: flex; align-items: flex-start; gap: 8px;">
                   <span style="color: #10b981;">✓</span>
-                  <span><strong>Complete Data Ownership</strong>: Export a complete JSON backup of your indexed library or permanently purge your local database files instantly at any time.</span>
+                  <span><strong>Total Ownership</strong>: You can download your history or wipe it completely in one click.</span>
                 </li>
               </ul>
             </div>
@@ -423,17 +473,17 @@
             <div class="settings-card">
               <h3 class="settings-card-title">
                 <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                AI Model Engine Configuration
+                Assistant Settings
               </h3>
               
               <div class="settings-form-group">
-                <label class="settings-label" for="setting-ai-provider">Query Model Provider</label>
+                <label class="settings-label" for="setting-ai-provider">Assistant Brain</label>
                 <select class="settings-select" id="setting-ai-provider">
-                  <option value="gemini_api">Google Gemini API (Recommended - Highly Intelligent)</option>
-                  <option value="groq_api">Groq API (Ludicrously Fast - Meta Llama 3 & Mixtral)</option>
-                  <option value="window_ai">Chrome Built-in AI (Gemini Nano - 100% Offline)</option>
+                  <option value="gemini_api">Google Gemini API (Recommended)</option>
+                  <option value="groq_api">Groq API (High Speed)</option>
+                  <option value="window_ai">Chrome Offline AI (100% Private)</option>
                 </select>
-                <span class="settings-desc">Choose between using official Google Gemini developer API keys, Groq's high-speed LPU cloud engine, or Chrome's experimental local offline model.</span>
+                <span class="settings-desc">Select which system runs the assistant helper.</span>
               </div>
 
               <!-- Gemini API Key configuration box -->
@@ -476,9 +526,9 @@
             <div class="settings-card">
               <h3 class="settings-card-title">
                 <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="8" x2="16" y2="16"/><line x1="8" y1="16" x2="16" y2="16"/><polyline points="12 12 16 16 20 12"/></svg>
-                Import YouTube History (Google Takeout)
+                Import History from Google
               </h3>
-              <p class="settings-desc">Backfill your vault with years of historical logs! Go to <a href="https://takeout.google.com" target="_blank">takeout.google.com</a>, deselect all except "YouTube", request "Watch History" in JSON format. Once downloaded, drag the <code>watch-history.json</code> file below.</p>
+              <p class="settings-desc">Add your past YouTube history here! Go to <a href="https://takeout.google.com" target="_blank">takeout.google.com</a>, select only YouTube, download it as a file, and drop it here.</p>
               
               <div class="takeout-upload-area" id="takeout-drop-zone">
                 <svg viewBox="0 0 24 24">
@@ -486,8 +536,8 @@
                   <polyline points="17 8 12 3 7 8"/>
                   <line x1="12" y1="3" x2="12" y2="15"/>
                 </svg>
-                <span class="takeout-upload-title">Drag & Drop watch-history.json here</span>
-                <span class="takeout-upload-subtitle">or click to browse local files</span>
+                <span class="takeout-upload-title">Drop watch-history.json here</span>
+                <span class="takeout-upload-subtitle">or click to select file</span>
                 <input type="file" id="takeout-file-input" style="display: none;" accept=".json">
               </div>
 
@@ -507,7 +557,7 @@
             <div class="settings-card">
               <h3 class="settings-card-title">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                Local Storage Retention Policy
+                How long to keep history
               </h3>
               
               <div class="settings-form-group">
@@ -518,7 +568,7 @@
                   <option value="six_months">Delete logs older than 6 Months</option>
                   <option value="thirty_days">Delete logs older than 30 Days</option>
                 </select>
-                <span class="settings-desc">Expired watch data will be silently pruned automatically during background extension maintenance cycles.</span>
+                <span class="settings-desc">Older videos will be automatically deleted based on your selection.</span>
               </div>
             </div>
           </div>
@@ -534,7 +584,7 @@
     <svg viewBox="0 0 24 24" width="16" height="16">
       <polyline points="20 6 9 17 4 12"></polyline>
     </svg>
-    <span id="toast-message">Database initialized successfully!</span>
+    <span id="toast-message">Ready</span>
   </div>
 
   <script type="module" src="sidepanel.js"></script>
