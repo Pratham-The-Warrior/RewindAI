@@ -14,10 +14,9 @@ let isScriptOrphaned = false;
 // Named event listener for clean teardown on context invalidation
 function handleYouTubePageTransition() {
   if (isScriptOrphaned) return;
-  const url = new URL(window.location.href);
-  const videoId = url.searchParams.get('v');
+  const videoId = getActiveVideoId();
 
-  // Verify we are actually on a watch page and it's a new video
+  // Verify we are actually on a watch page/shorts and it's a new video
   if (videoId && videoId !== activeVideoId) {
     stopTracking(); // Stop tracking previous video
     activeVideoId = videoId;
@@ -30,7 +29,7 @@ function handleYouTubePageTransition() {
       startTracking(videoId);
     }, 1500);
   } else if (!videoId) {
-    // Navigated away from watch page
+    // Navigated away from watch/shorts page
     stopTracking();
     activeVideoId = null;
   }
@@ -64,14 +63,32 @@ document.addEventListener('visibilitychange', handleVisibilityChange);
 // Fallback URL checking to support SPA transitions missed by YouTube events
 urlCheckInterval = setInterval(() => {
   if (isScriptOrphaned) return;
-  const url = new URL(window.location.href);
-  const videoId = url.searchParams.get('v');
+  const videoId = getActiveVideoId();
   if (videoId && videoId !== activeVideoId) {
     handleYouTubePageTransition();
   } else if (!videoId && activeVideoId) {
     handleYouTubePageTransition();
   }
 }, 2000);
+
+/**
+ * Extracts active video or Shorts ID from current YouTube URL path
+ */
+function getActiveVideoId() {
+  const url = new URL(window.location.href);
+  
+  // Standard video watcher: /watch?v=XXXX
+  const videoId = url.searchParams.get('v');
+  if (videoId) return videoId;
+  
+  // Shorts watcher: /shorts/XXXX
+  if (url.pathname.startsWith('/shorts/')) {
+    const parts = url.pathname.split('/');
+    return parts[2] || null;
+  }
+  
+  return null;
+}
 
 /**
  * Safely dispatch messages to Chrome service worker, catching context invalidations.
@@ -123,7 +140,8 @@ function cleanupOrphanedScript() {
 function startTracking(videoId, retryCount = 0) {
   if (isScriptOrphaned || videoId !== activeVideoId) return;
   try {
-    const videoElement = document.querySelector('video');
+    const videoElement = document.querySelector('ytd-reel-video-renderer[is-active] video')
+                      || document.querySelector('video');
     if (!videoElement) {
       // Retry in a second if player is loading slowly
       if (retryCount < 5) {
@@ -176,7 +194,8 @@ function startTracking(videoId, retryCount = 0) {
     
     watchTimer = setInterval(() => {
       if (isScriptOrphaned) return;
-      const activeVideo = document.querySelector('video');
+      const activeVideo = document.querySelector('ytd-reel-video-renderer[is-active] video')
+                       || document.querySelector('video');
       
       if (activeVideo && !activeVideo.paused && !activeVideo.ended && document.visibilityState === 'visible') {
         const now = Date.now();
@@ -267,7 +286,9 @@ function getTitle() {
 function getChannelName() {
   const channelEl = document.querySelector('ytd-video-owner-renderer yt-formatted-string.ytd-channel-name a')
                  || document.querySelector('#upload-info yt-formatted-string.ytd-channel-name a')
-                 || document.querySelector('span[itemprop="author"] link[itemprop="name"]');
+                 || document.querySelector('span[itemprop="author"] link[itemprop="name"]')
+                 || document.querySelector('ytd-reel-video-renderer[is-active] ytd-channel-name a')
+                 || document.querySelector('ytd-reel-video-renderer[is-active] #channel-name a');
   
   if (channelEl) {
     return channelEl.content || channelEl.textContent.trim();
@@ -277,7 +298,9 @@ function getChannelName() {
 
 function getChannelUrl() {
   const channelLink = document.querySelector('ytd-video-owner-renderer yt-formatted-string.ytd-channel-name a')
-                   || document.querySelector('#upload-info yt-formatted-string.ytd-channel-name a');
+                   || document.querySelector('#upload-info yt-formatted-string.ytd-channel-name a')
+                   || document.querySelector('ytd-reel-video-renderer[is-active] ytd-channel-name a')
+                   || document.querySelector('ytd-reel-video-renderer[is-active] #channel-name a');
   
   if (channelLink && channelLink.href) {
     return channelLink.href;
@@ -288,7 +311,8 @@ function getChannelUrl() {
 function getChannelAvatar() {
   const avatarImg = document.querySelector('ytd-video-owner-renderer #avatar img')
                  || document.querySelector('ytd-video-owner-renderer img#img')
-                 || document.querySelector('.yt-img-shadow img');
+                 || document.querySelector('.yt-img-shadow img')
+                 || document.querySelector('ytd-reel-video-renderer[is-active] #channel-avatar img');
   
   if (avatarImg && avatarImg.src && avatarImg.src.startsWith('http')) {
     return avatarImg.src;
