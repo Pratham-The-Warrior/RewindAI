@@ -29,16 +29,16 @@
   ],
   "action": {
     "default_title": "Open Privacy Vault",
-    "default_icon": "icons/icon.svg"
+    "default_icon": "logo.png"
   },
   "side_panel": {
     "default_path": "sidepanel.html"
   },
   "options_page": "dashboard.html",
   "icons": {
-    "16": "icons/icon.svg",
-    "32": "icons/icon.svg",
-    "48": "icons/icon.svg",
-    "128": "icons/icon.svg"
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
   }
 }
