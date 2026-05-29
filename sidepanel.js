@@ -128,7 +128,31 @@ function setupNavigation() {
     });
   });
 
-  // Gear header action redirect
+  // Shield header action redirect (to Settings/Privacy Lab)
+  const shieldBtn = document.getElementById('util-shield');
+  if (shieldBtn) {
+    shieldBtn.addEventListener('click', () => {
+      switchView('lab');
+      navItems.forEach(i => {
+        i.classList.remove('active');
+        if (i.getAttribute('data-view') === 'lab') i.classList.add('active');
+      });
+    });
+  }
+
+  // Audit Logs list header action redirect (to History Timeline)
+  const listBtn = document.getElementById('util-list');
+  if (listBtn) {
+    listBtn.addEventListener('click', () => {
+      switchView('history');
+      navItems.forEach(i => {
+        i.classList.remove('active');
+        if (i.getAttribute('data-view') === 'history') i.classList.add('active');
+      });
+    });
+  }
+
+  // Gear header action redirect (to Settings/Privacy Lab)
   const gearBtn = document.getElementById('util-gear');
   if (gearBtn) {
     gearBtn.addEventListener('click', () => {
